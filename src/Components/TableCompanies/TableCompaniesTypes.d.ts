@@ -14,3 +14,8 @@ export declare interface CompaniesRowsProps {
     selectRow: (number)=>void;
     selectedCompanies: Array<number>;
 }
+
+export declare interface CompaniesHeaderProps {
+    selectedCompanies: Array<number>;
+    companiesAmount: number;
+}

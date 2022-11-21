@@ -1,25 +1,14 @@
 import React, {useEffect, useState} from "react";
-import TableHeader from "../TableHeader/TableHeader";
 import CompaniesRows from "./CompaniesRows";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../app/store";
 import getFakeData from "../FakeData/GetFakeData";
 import {setCompanies, setAmount, selectCompany} from "../../app/reducers/companies-slice";
 import {faker} from '@faker-js/faker';
+import CompaniesHeader from "./CompaniesHeader";
+import {Companies} from "./TableCompaniesTypes";
 
 function TableCompanies () {
-    const [currentPage, setCurrentPage] = useState<number>(0);
-
-    useEffect(()=>{
-        if (companiesAmount === 0) {
-            const amount = faker.datatype.number({min: 100, max: 300, precision: 1});
-            dispatch(setAmount(amount));
-            dispatch(setCompanies(getFakeData(0, amount)));
-        } else {
-            getMoreData();
-        }
-    }, [currentPage])
-
     const companies = useSelector((state: RootState) => {
         return state.companiesReducer.companies
     });
@@ -30,18 +19,24 @@ function TableCompanies () {
         return state.companiesReducer.selectedCompanies
     });
     const dispatch = useDispatch();
-    const columns = ['Чекбокс', 'Название компании', 'Кол-во сотрудников', 'Адрес'];
+    const [page, setPage] = useState<number>(0);
+    const [currentContent, setCurrentContent] = useState<Array<Companies>>([]);
+
+    useEffect(()=>{
+        if (companiesAmount === 0) {
+            const amount = faker.datatype.number({min: 100, max: 300, precision: 1});
+            dispatch(setAmount(amount));
+            dispatch(setCompanies(getFakeData(amount)));
+        }
+        setCurrentContent([...companies].splice(0, 30 + page*30));
+    }, [page, companies])
 
     const loadMore = async (scrollTop: number, gap: number) => {
         if (scrollTop > gap) {
-            if (companies.length < companiesAmount) {
-                await setCurrentPage(currentPage + 1);
+            if (currentContent.length < companiesAmount) {
+                await setPage(page + 1);
             }
         }
-    }
-
-    const getMoreData = () => {
-        dispatch(setCompanies(getFakeData(currentPage, companiesAmount)));
     }
 
     const selectRow = (index: number) => {
@@ -55,12 +50,12 @@ function TableCompanies () {
                 <div>{`Всего компаний: ${companiesAmount}`}</div>
             </div>
             <div className='table-body'>
-                <TableHeader
-                    columns={columns}
-                    type='companies'
+                <CompaniesHeader
+                    selectedCompanies={selectedCompanies}
+                    companiesAmount={companiesAmount}
                 />
                 <CompaniesRows
-                    content={companies}
+                    content={currentContent}
                     loadMore={loadMore}
                     selectRow={selectRow}
                     selectedCompanies={selectedCompanies}

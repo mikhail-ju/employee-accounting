@@ -3,12 +3,11 @@ import {Employees} from "../TableEmployees/TableEmployeesTypes";
 import {GetCompanies, GetEmployee} from "./FakeDataTypes";
 import {Companies} from "../TableCompanies/TableCompaniesTypes";
 
-export default function getFakeData (page: number, companyAmount: number) {
+export default function getFakeData (companyAmount: number) {
     const getEmployee = (amount: number) => {
         const employee: GetEmployee = (id) => {
             return (
                 {
-                    check: false,
                     firstName: `${faker.name.firstName()}`,
                     lastName: `${faker.name.lastName()}`,
                     position: `${faker.name.jobType()}`,
@@ -38,8 +37,7 @@ export default function getFakeData (page: number, companyAmount: number) {
             );
         }
         const result: Array<Companies> = [];
-        const amount = page*30 + 30 >= companyAmount ? companyAmount : page*30 + 30;
-        for (let i = page*30; i < amount; i++) {
+        for (let i = 0; i < companyAmount; i++) {
             result.push(company(i));
         }
         return result;

@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
-import TableHeader from "../TableHeader/TableHeader";
 import EmployeesRows from "./EmployeesRows";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../app/store";
 import {Employees} from "./TableEmployeesTypes";
+import {selectEmployee} from "../../app/reducers/companies-slice";
+import EmployeesHeader from "./EmployeesHeader";
 
 function TableEmployees () {
+    const dispatch = useDispatch();
     const employees = useSelector((state: RootState) => {
         return state.companiesReducer.employees;
     });
@@ -15,7 +17,6 @@ function TableEmployees () {
     const employeesAmount = useSelector((state: RootState) => {
         return state.companiesReducer.employeesAmount;
     });
-    const columns = ['Чекбокс', 'Фамилия', 'Имя', 'Должность'];
     const [page, setPage] = useState<number>(0);
     const [currentContent, setCurrentContent] = useState<Array<Employees>>([]);
 
@@ -32,6 +33,10 @@ function TableEmployees () {
         }
     }
 
+    const selectRow = (index: number) => {
+        dispatch(selectEmployee(index))
+    }
+
     return (
         <div className='table'>
             <div className='table-name'>
@@ -41,15 +46,15 @@ function TableEmployees () {
                 }
             </div>
             <div className='table-body'>
-                <TableHeader
-                    columns={columns}
-                    type='employees'
+                <EmployeesHeader
+                    selectedEmployees={selectedEmployees}
+                    employeesAmount={employeesAmount}
                 />
                 <EmployeesRows
                     content={currentContent}
                     selectedEmployees={selectedEmployees}
                     loadMore={loadMore}
-                    selectRow={()=>{}}
+                    selectRow={selectRow}
                 />
             </div>
         </div>

@@ -44,11 +44,37 @@ export const companiesSlice = createSlice({
             } else {
                 state.employees = [];
                 state.employeesAmount = 0;
+                state.selectedEmployees = [];
+            }
+        },
+        selectAllCompanies: (state) => {
+            if (state.selectedCompanies.length === state.companiesAmount) {
+                state.selectedCompanies = [];
+            } else {
+                state.selectedCompanies = [];
+                state.companies.map((item, index) => state.selectedCompanies.push(index));
+            }
+        },
+        selectEmployee: (state, action: PayloadAction<number>) => {
+            if (state.selectedEmployees.includes(action.payload)) {
+                const index: number = state.selectedEmployees.indexOf(action.payload);
+                state.selectedEmployees.splice(index, 1);
+            } else {
+                state.selectedEmployees.push(action.payload);
+            }
+        },
+        selectAllEmployees: (state) => {
+            if (state.selectedEmployees.length === state.employeesAmount) {
+                state.selectedEmployees = [];
+            } else {
+                state.selectedEmployees = [];
+                state.employees.map((item, index) => state.selectedEmployees.push(index));
             }
         },
     },
 })
 
-export const {setCompanies} = companiesSlice.actions;
-export const {setAmount} = companiesSlice.actions;
-export const {selectCompany} = companiesSlice.actions;
+export const {
+    setCompanies, setAmount, selectCompany,
+    selectEmployee, selectAllCompanies, selectAllEmployees,
+} = companiesSlice.actions;

@@ -11,3 +11,8 @@ export declare interface EmployeesRowsProps {
     selectRow: (number)=>void;
     selectedEmployees: Array<number>;
 }
+
+export declare interface EmployeesHeaderProps {
+    selectedEmployees: Array<number>;
+    employeesAmount: number;
+}
