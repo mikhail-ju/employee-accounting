@@ -5,7 +5,14 @@ function EmployeesRows (props: EmployeesRowsProps) {
     const {content, loadMore, selectedEmployees, selectRow} = props;
 
     return (
-        <div className='table-rows'>
+        <div
+            className='table-rows'
+            onScroll={(e) => {
+                const item = e.currentTarget;
+                const gap = item.scrollHeight - item.clientHeight - 30;
+                loadMore(item.scrollTop, gap);
+            }}
+        >
             {content.length > 0 ?
                 <>
                     {content.map((item) => {

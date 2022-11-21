@@ -40,7 +40,7 @@ export const companiesSlice = createSlice({
 
             if (state.selectedCompanies.length === 1) {
                 state.employees = state.companies[state.selectedCompanies[0]].employees;
-                state.employeesAmount = state.companies[state.selectedCompanies[0]].employees.length;
+                state.employeesAmount = state.companies[state.selectedCompanies[0]].employeesAmount;
             } else {
                 state.employees = [];
                 state.employeesAmount = 0;

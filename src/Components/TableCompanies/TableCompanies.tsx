@@ -20,16 +20,21 @@ function TableCompanies () {
         }
     }, [currentPage])
 
-    const companies = useSelector((state: RootState) => state.companiesReducer.companies);
-    const companiesAmount = useSelector((state: RootState) => state.companiesReducer.companiesAmount);
-    const selectedCompanies = useSelector((state: RootState) => state.companiesReducer.selectedCompanies);
+    const companies = useSelector((state: RootState) => {
+        return state.companiesReducer.companies
+    });
+    const companiesAmount = useSelector((state: RootState) => {
+        return state.companiesReducer.companiesAmount
+    });
+    const selectedCompanies = useSelector((state: RootState) => {
+        return state.companiesReducer.selectedCompanies
+    });
     const dispatch = useDispatch();
-
     const columns = ['Чекбокс', 'Название компании', 'Кол-во сотрудников', 'Адрес'];
 
     const loadMore = async (scrollTop: number, gap: number) => {
         if (scrollTop > gap) {
-            if (companies.length < companiesAmount && companies.length <= 30 + 30*currentPage) {
+            if (companies.length < companiesAmount) {
                 await setCurrentPage(currentPage + 1);
             }
         }

@@ -45,7 +45,5 @@ export default function getFakeData (page: number, companyAmount: number) {
         return result;
     }
 
-    return (
-        getCompanies()
-    );
+    return getCompanies();
 }
