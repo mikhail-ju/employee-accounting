@@ -11,4 +11,5 @@ export declare interface Companies {
 
 export declare interface CompaniesRowsProps {
     content: Array<Companies>;
+    loadMore: (number, number)=>void;
 }

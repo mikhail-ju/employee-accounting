@@ -22,7 +22,7 @@ body {
 .App {
   width: 100%;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 55% 44%;
   gap: 20px;
 }
 
@@ -38,11 +38,22 @@ body {
   margin: 0 0 5px 0;
   padding-bottom: 5px;
   border-bottom: 1px solid #d2d2d2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 .table-header {
   border-bottom: 1px solid #d2d2d2;
   padding-bottom: 5px;
-  background-color: #566ead;
+  background-color: #566ead !important;
+  cursor: default !important;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   color: #ffffff;
@@ -87,7 +98,7 @@ body {
   padding: 5px 0 5px 0;
 }
 .table-row-companies {
-  grid-template-columns: 8% 30% 30% 30%;
+  grid-template-columns: 8% 35% 20% 35%;
 }
 .table-row-employees {
   grid-template-columns: 8% 30% 30% 30%;

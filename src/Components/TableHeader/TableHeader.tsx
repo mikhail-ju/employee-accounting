@@ -6,13 +6,13 @@ function TableHeader (props: HeaderProps) {
 
     return (
         <div className={`table-row table-row-${type} table-header`}>
-            {columns.map((item, index) => {
+            {columns.map((item) => {
                 return (
                     item === 'Чекбокс' ?
-                        <div className='table-row-cell table-header-cell' key={index}>
+                        <div className='table-row-cell table-header-cell' key={item}>
                             <input type='checkbox'/>
                         </div> :
-                        <div className='table-row-cell table-header-cell' key={index}>
+                        <div className='table-row-cell table-header-cell' key={item}>
                             {item}
                         </div>
                 );

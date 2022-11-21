@@ -3,7 +3,7 @@ import {Employees} from "../TableEmployees/TableEmployeesTypes";
 import {GetCompanies, GetEmployee} from "./FakeDataTypes";
 import {Companies} from "../TableCompanies/TableCompaniesProps";
 
-export default function getFakeData () {
+export default function getFakeData (page: number, companyAmount: number) {
     const getEmployee = (amount: number) => {
         const employee: GetEmployee = (id) => {
             return (
@@ -23,7 +23,7 @@ export default function getFakeData () {
         return result;
     }
 
-    const getCompanies = (amount: number) => {
+    const getCompanies = () => {
         const company: GetCompanies = (id) => {
             const employeesAmount: number = faker.datatype.number({min: 1, max: 1000, precision: 1})
             return (
@@ -38,13 +38,14 @@ export default function getFakeData () {
             );
         }
         const result: Array<Companies> = [];
-        for (let i = 0; i < amount; i++) {
+        const amount = page*30 + 30 >= companyAmount ? companyAmount : page*30 + 30;
+        for (let i = page*30; i < amount; i++) {
             result.push(company(i));
         }
         return result;
     }
 
     return (
-        getCompanies(faker.datatype.number({min: 100, max: 300, precision: 1}))
+        getCompanies()
     );
 }

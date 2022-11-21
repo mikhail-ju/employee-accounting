@@ -28,7 +28,7 @@ body {
 .App {
   width: 100%;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 55% 44%;
   gap: 20px;
 }
 
@@ -42,11 +42,15 @@ body {
     margin: 0 0 5px 0;
     padding-bottom: 5px;
     border-bottom: 1px solid $border-color;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
   &-header {
     border-bottom: 1px solid $border-color;
     padding-bottom: 5px;
-    background-color: $header-color;
+    background-color: $header-color !important;
+    cursor: default !important;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     color: #ffffff;
@@ -88,7 +92,7 @@ body {
       padding: 5px 0 5px 0;
     }
     &-companies {
-      grid-template-columns: 8% 30% 30% 30%;
+      grid-template-columns: 8% 35% 20% 35%;
     }
     &-employees {
       grid-template-columns: 8% 30% 30% 30%;
