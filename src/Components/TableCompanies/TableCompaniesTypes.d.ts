@@ -1,7 +1,6 @@
 import {Employees} from "../TableEmployees/TableEmployeesTypes";
 
 export declare interface Companies {
-    check: boolean;
     companyName: string;
     employeesAmount: number;
     address: string;
@@ -12,4 +11,6 @@ export declare interface Companies {
 export declare interface CompaniesRowsProps {
     content: Array<Companies>;
     loadMore: (number, number)=>void;
+    selectRow: (number)=>void;
+    selectedCompanies: Array<number>;
 }

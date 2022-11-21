@@ -1,5 +1,4 @@
 export declare interface Employees {
-    check: boolean;
     lastName: string;
     firstName: string;
     position: string;
@@ -8,4 +7,7 @@ export declare interface Employees {
 
 export declare interface EmployeesRowsProps {
     content: Array<Employees>;
+    loadMore: (number, number)=>void;
+    selectRow: (number)=>void;
+    selectedEmployees: Array<number>;
 }

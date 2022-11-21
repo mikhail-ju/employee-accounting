@@ -4,7 +4,7 @@ import CompaniesRows from "./CompaniesRows";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../app/store";
 import getFakeData from "../FakeData/GetFakeData";
-import {setCompanies, setAmount} from "../../app/reducers/companies-slice";
+import {setCompanies, setAmount, selectCompany} from "../../app/reducers/companies-slice";
 import {faker} from '@faker-js/faker';
 
 function TableCompanies () {
@@ -22,7 +22,9 @@ function TableCompanies () {
 
     const companies = useSelector((state: RootState) => state.companiesReducer.companies);
     const companiesAmount = useSelector((state: RootState) => state.companiesReducer.companiesAmount);
+    const selectedCompanies = useSelector((state: RootState) => state.companiesReducer.selectedCompanies);
     const dispatch = useDispatch();
+
     const columns = ['Чекбокс', 'Название компании', 'Кол-во сотрудников', 'Адрес'];
 
     const loadMore = async (scrollTop: number, gap: number) => {
@@ -37,6 +39,10 @@ function TableCompanies () {
         dispatch(setCompanies(getFakeData(currentPage, companiesAmount)));
     }
 
+    const selectRow = (index: number) => {
+        dispatch(selectCompany(index))
+    }
+
     return (
         <div className='table'>
             <div className='table-name'>
@@ -48,7 +54,12 @@ function TableCompanies () {
                     columns={columns}
                     type='companies'
                 />
-                <CompaniesRows content={companies} loadMore={loadMore}/>
+                <CompaniesRows
+                    content={companies}
+                    loadMore={loadMore}
+                    selectRow={selectRow}
+                    selectedCompanies={selectedCompanies}
+                />
             </div>
         </div>
     );

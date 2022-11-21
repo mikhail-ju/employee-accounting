@@ -1,7 +1,7 @@
 import {faker} from '@faker-js/faker';
 import {Employees} from "../TableEmployees/TableEmployeesTypes";
 import {GetCompanies, GetEmployee} from "./FakeDataTypes";
-import {Companies} from "../TableCompanies/TableCompaniesProps";
+import {Companies} from "../TableCompanies/TableCompaniesTypes";
 
 export default function getFakeData (page: number, companyAmount: number) {
     const getEmployee = (amount: number) => {
