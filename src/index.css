@@ -36,7 +36,7 @@ body {
 .table-name {
   width: 100%;
   margin: 0 0 5px 0;
-  padding-bottom: 5px;
+  padding: 5px;
   border-bottom: 1px solid #d2d2d2;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -48,6 +48,7 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  font-size: 18px;
 }
 .table-header {
   border-bottom: 1px solid #d2d2d2;
@@ -107,4 +108,29 @@ body {
 }
 .table-row-employees {
   grid-template-columns: 8% 30% 30% 32%;
+}
+
+.actions {
+  font-size: 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+.actions div {
+  margin: 0 10px;
+}
+.actions div.able {
+  color: #566ead;
+  cursor: pointer;
+}
+.actions div.able.delete-button {
+  color: #ad0000;
+}
+.actions div.disable {
+  color: #aaaaaa;
+  cursor: not-allowed;
 }

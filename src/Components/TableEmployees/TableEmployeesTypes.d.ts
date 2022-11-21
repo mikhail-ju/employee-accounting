@@ -16,3 +16,8 @@ export declare interface EmployeesHeaderProps {
     selectedEmployees: Array<number>;
     employeesAmount: number;
 }
+
+export declare interface EmployeesActionsProps {
+    selectedEmployees: Array<number>;
+    selectedCompanies: Array<number>;
+}

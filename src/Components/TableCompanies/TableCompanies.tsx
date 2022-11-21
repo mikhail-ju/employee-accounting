@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from "react";
-import CompaniesRows from "./CompaniesRows";
+import CompaniesRows from "./Components/CompaniesRows";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../app/store";
 import getFakeData from "../FakeData/GetFakeData";
 import {setCompanies, setAmount, selectCompany} from "../../app/reducers/companies-slice";
 import {faker} from '@faker-js/faker';
-import CompaniesHeader from "./CompaniesHeader";
+import CompaniesHeader from "./Components/CompaniesHeader";
 import {Companies} from "./TableCompaniesTypes";
+import {RiAddCircleLine, RiDeleteBinLine, RiEditLine} from "react-icons/ri";
+import CompaniesActions from "./Components/CompaniesActions";
 
 function TableCompanies () {
     const companies = useSelector((state: RootState) => {
@@ -46,8 +48,10 @@ function TableCompanies () {
     return (
         <div className='table'>
             <div className='table-name'>
-                <div>Компании</div>
-                <div>{`Всего компаний: ${companiesAmount}`}</div>
+                <div>
+                    {companiesAmount > 0 ? `Всего компаний: ${companiesAmount}` : 'Компании'}
+                </div>
+                <CompaniesActions selectedCompanies={selectedCompanies}/>
             </div>
             <div className='table-body'>
                 <CompaniesHeader

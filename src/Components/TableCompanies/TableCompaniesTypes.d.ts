@@ -19,3 +19,7 @@ export declare interface CompaniesHeaderProps {
     selectedCompanies: Array<number>;
     companiesAmount: number;
 }
+
+export declare interface CompaniesActionsProps {
+    selectedCompanies: Array<number>;
+}

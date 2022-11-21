@@ -1,5 +1,5 @@
 import React from "react";
-import {EmployeesRowsProps} from "./TableEmployeesTypes";
+import {EmployeesRowsProps} from "../TableEmployeesTypes";
 
 function EmployeesRows (props: EmployeesRowsProps) {
     const {content, loadMore, selectedEmployees, selectRow} = props;

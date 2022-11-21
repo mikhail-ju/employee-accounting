@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
-import EmployeesRows from "./EmployeesRows";
+import EmployeesRows from "./Components/EmployeesRows";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../app/store";
 import {Employees} from "./TableEmployeesTypes";
 import {selectEmployee} from "../../app/reducers/companies-slice";
-import EmployeesHeader from "./EmployeesHeader";
+import EmployeesHeader from "./Components/EmployeesHeader";
+import {RiDeleteBinLine, RiAddCircleLine, RiEditLine} from "react-icons/ri";
+import EmployeesAction from "./Components/EmployeesActions";
 
 function TableEmployees () {
     const dispatch = useDispatch();
@@ -13,6 +15,9 @@ function TableEmployees () {
     });
     const selectedEmployees = useSelector((state: RootState) => {
         return state.companiesReducer.selectedEmployees;
+    });
+    const selectedCompanies = useSelector((state: RootState) => {
+        return state.companiesReducer.selectedCompanies
     });
     const employeesAmount = useSelector((state: RootState) => {
         return state.companiesReducer.employeesAmount;
@@ -40,10 +45,13 @@ function TableEmployees () {
     return (
         <div className='table'>
             <div className='table-name'>
-                <div>Сотрудники</div>
-                {employeesAmount > 0 &&
-                    <div>{`Всего сотрудников: ${employeesAmount}`}</div>
-                }
+                <div>
+                    {employeesAmount > 0 ? `Всего сотрудников: ${employeesAmount}` : 'Сотрудники'}
+                </div>
+                <EmployeesAction
+                    selectedEmployees={selectedEmployees}
+                    selectedCompanies={selectedCompanies}
+                />
             </div>
             <div className='table-body'>
                 <EmployeesHeader

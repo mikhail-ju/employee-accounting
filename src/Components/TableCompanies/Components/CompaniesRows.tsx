@@ -1,5 +1,5 @@
 import React from "react";
-import {CompaniesRowsProps} from "./TableCompaniesTypes";
+import {CompaniesRowsProps} from "../TableCompaniesTypes";
 
 function CompaniesRows (props: CompaniesRowsProps) {
     const {content, loadMore, selectRow, selectedCompanies} = props;

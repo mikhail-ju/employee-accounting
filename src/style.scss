@@ -40,11 +40,12 @@ body {
   &-name {
     width: 100%;
     margin: 0 0 5px 0;
-    padding-bottom: 5px;
+    padding: 5px;
     border-bottom: 1px solid $border-color;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    font-size: 18px;
   }
   &-header {
     border-bottom: 1px solid $border-color;
@@ -101,6 +102,26 @@ body {
     }
     &-employees {
       grid-template-columns: 8% 30% 30% 32%;
+    }
+  }
+}
+
+.actions {
+  font-size: 25px;
+  display: flex;
+  flex-direction: row;
+  div {
+    margin: 0 10px;
+    &.able {
+      color: $header-color;
+      cursor: pointer;
+      &.delete-button {
+        color: #ad0000;
+      }
+    }
+    &.disable {
+      color: #aaaaaa;
+      cursor: not-allowed;
     }
   }
 }

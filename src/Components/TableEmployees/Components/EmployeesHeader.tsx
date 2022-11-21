@@ -1,15 +1,15 @@
 import React from "react";
 import {useDispatch} from "react-redux";
-import { selectAllCompanies } from "../../app/reducers/companies-slice";
-import {CompaniesHeaderProps} from "./TableCompaniesTypes";
+import {selectAllEmployees} from "../../../app/reducers/companies-slice";
+import {EmployeesHeaderProps} from "../TableEmployeesTypes";
 
-function CompaniesHeader (props: CompaniesHeaderProps) {
-    const columns = ['Чекбокс', 'Название компании', 'Кол-во сотрудников', 'Адрес'];
-    const {selectedCompanies, companiesAmount} = props;
+function EmployeesHeader (props: EmployeesHeaderProps) {
+    const columns = ['Чекбокс', 'Фамилия', 'Имя', 'Должность'];
+    const {selectedEmployees, employeesAmount} = props;
     const dispatch = useDispatch();
 
     return (
-        <div className={`table-row table-row-companies table-header`}>
+        <div className={`table-row table-row-employees table-header`}>
             {columns.map((item) => {
                 return (
                     item === 'Чекбокс' ?
@@ -17,12 +17,15 @@ function CompaniesHeader (props: CompaniesHeaderProps) {
                             className='table-row-cell table-header-cell'
                             key={item}
                             onClick={() => {
-                                dispatch(selectAllCompanies())
+                                dispatch(selectAllEmployees())
                             }}
                         >
                             <input
                                 type='checkbox'
-                                checked={companiesAmount === selectedCompanies.length}
+                                checked={
+                                    employeesAmount === selectedEmployees.length &&
+                                    employeesAmount !== 0
+                                }
                                 onChange={()=>{}}
                             />
                         </div> :
@@ -35,4 +38,4 @@ function CompaniesHeader (props: CompaniesHeaderProps) {
     );
 }
 
-export default CompaniesHeader;
+export default EmployeesHeader;
