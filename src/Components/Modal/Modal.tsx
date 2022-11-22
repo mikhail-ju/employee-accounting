@@ -9,6 +9,8 @@ import {
 } from "../../app/reducers/companies-slice";
 import CompaniesForm from "../TableCompanies/Components/CompaniesForm";
 import {Companies, CompaniesValues} from "../TableCompanies/TableCompaniesTypes";
+import EmployeesForm from "../TableEmployees/Components/EmployeesForm";
+import {Employees, EmployeesValues} from "../TableEmployees/TableEmployeesTypes";
 
 export default function Modal () {
     const {mode} = useSelector((state: RootState) => state.modalReducer);
@@ -43,7 +45,7 @@ export default function Modal () {
         dispatch(accept());
     }
 
-    const onAdd = (values: CompaniesValues) => {
+    const onAddCompany = (values: CompaniesValues) => {
         const newCompanies: Array<Companies> = [...companies];
         const ids: Array<number> = newCompanies.map((item) => item.id)
         newCompanies.unshift({
@@ -57,7 +59,7 @@ export default function Modal () {
         dispatch(accept());
     }
 
-    const onEdit = (values: CompaniesValues) => {
+    const onEditCompany = (values: CompaniesValues) => {
         if (currentCompany) {
             const newCompanies: Array<Companies> = [...companies].map((item) => {
                 if (item.id === currentCompany.id) {
@@ -68,6 +70,54 @@ export default function Modal () {
                         employees: currentCompany.employees,
                         id: currentCompany.id,
                     };
+                } else {
+                    return item;
+                }
+            });
+            dispatch(setCompanies(newCompanies));
+            dispatch(accept());
+        }
+    }
+
+    const onAddEmployee = (values: EmployeesValues) => {
+        if (currentCompany) {
+            const newEmployees: Array<Employees> = [...employees];
+            const ids: Array<number> = newEmployees.map((item) => item.id)
+            newEmployees.unshift({
+                firstName: values.firstName,
+                lastName: values.lastName,
+                position: values.position,
+                id: Math.max(...ids) + 1,
+            });
+            const newCompanies: Array<Companies> = [...companies].map((item) => {
+                if (item.id === currentCompany.id) {
+                    return {...item, employees: newEmployees}
+                } else {
+                    return item;
+                }
+            });
+            dispatch(setCompanies(newCompanies));
+            dispatch(accept());
+        }
+    }
+
+    const onEditEmployee = (values: EmployeesValues) => {
+        if (currentCompany && currentEmployee) {
+            const newEmployees: Array<Employees> = [...employees].map((item) => {
+                if (item.id === currentEmployee.id) {
+                    return {
+                        firstName: values.firstName,
+                        lastName: values.lastName,
+                        position: values.position,
+                        id: currentEmployee.id,
+                    }
+                } else {
+                    return item;
+                }
+            })
+            const newCompanies: Array<Companies> = [...companies].map((item) => {
+                if (item.id === currentCompany.id) {
+                    return {...item, employees: newEmployees}
                 } else {
                     return item;
                 }
@@ -112,11 +162,20 @@ export default function Modal () {
                     <>
                         {mode.currentTable === 'companies' &&
                             <CompaniesForm
-                                onAdd={onAdd}
-                                onEdit={onEdit}
+                                onAdd={onAddCompany}
+                                onEdit={onEditCompany}
                                 onCancel={() => dispatch(setVisible(false))}
                                 mode={mode ? mode.currentMode : 'add'}
                                 values={mode?.currentMode === 'edit' ? currentCompany : null}
+                            />
+                        }
+                        {mode.currentTable === 'employees' &&
+                            <EmployeesForm
+                                values={mode?.currentMode === 'edit' ? currentEmployee : null}
+                                mode={mode ? mode.currentMode : 'add'}
+                                onAdd={onAddEmployee}
+                                onEdit={onEditEmployee}
+                                onCancel={() => dispatch(setVisible(false))}
                             />
                         }
                     </>

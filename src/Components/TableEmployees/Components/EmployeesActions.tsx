@@ -11,10 +11,22 @@ export default function EmployeesAction (props: EmployeesActionsProps) {
     return (
         <div className='actions'>
             <div className={`${selectedCompanies.length === 1 ? 'able' : 'disable'}`}>
-                <RiAddCircleLine/>
+                <RiAddCircleLine
+                    onClick={() => {
+                        dispatch(setMode({currentMode: 'add', currentTable: 'employees'}));
+                        dispatch(setVisible(true));
+                    }}
+                />
             </div>
             <div className={`${selectedEmployees.length === 1 ? 'able' : 'disable'}`}>
-                <RiEditLine/>
+                <RiEditLine
+                    onClick={() => {
+                        if (selectedEmployees.length === 1) {
+                            dispatch(setMode({currentMode: 'edit', currentTable: 'employees'}));
+                            dispatch(setVisible(true));
+                        }
+                    }}
+                />
             </div>
             <div className={`${selectedEmployees.length !== 0 ? 'able' : 'disable'} delete-button`}>
                 <RiDeleteBinLine

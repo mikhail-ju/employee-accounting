@@ -1,5 +1,4 @@
 import {CompaniesFormProps} from "../TableCompaniesTypes";
-import {setVisible} from "../../../app/reducers/modal-slice";
 import React, {useEffect, useState} from "react";
 
 export default function CompaniesForm (props: CompaniesFormProps) {
