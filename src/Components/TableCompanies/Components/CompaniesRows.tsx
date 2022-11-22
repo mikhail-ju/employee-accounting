@@ -13,13 +13,13 @@ function CompaniesRows (props: CompaniesRowsProps) {
                 loadMore(item.scrollTop, gap);
             }}
         >
-            {content.map((item, index) => {
+            {content.map((item) => {
                 const selected: boolean = selectedCompanies.includes(item.id);
                 return (
                     <div
                         className={`table-row table-row-companies ${selected ? 'table-row-checked' : ''}`}
                         key={item.id + item.companyName}
-                        onClick={() => selectRow(index)}
+                        onClick={() => selectRow(item.id)}
                     >
                         <div className='table-row-cell'>
                             <input

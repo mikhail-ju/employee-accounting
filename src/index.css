@@ -24,6 +24,7 @@ body {
   display: grid;
   grid-template-columns: 55% 44%;
   gap: 20px;
+  z-index: 0;
 }
 
 .table {
@@ -32,6 +33,7 @@ body {
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 15px;
   height: 90vh;
+  z-index: 1;
 }
 .table-name {
   width: 100%;
@@ -73,6 +75,7 @@ body {
   border: 1px solid #d2d2d2;
   -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
           box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 .table-rows {
   height: 80vh;
@@ -133,4 +136,58 @@ body {
 .actions div.disable {
   color: #aaaaaa;
   cursor: not-allowed;
+}
+
+.modal {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background-color: rgba(68, 68, 68, 0.5);
+}
+.modal-body {
+  border-radius: 15px;
+  margin: 200px auto;
+  width: 600px;
+  height: auto;
+  background-color: #ffffff;
+  border: 1px solid #566ead;
+  z-index: 101;
+  font-size: 18px;
+}
+.modal-header {
+  background-color: #566ead;
+  font-size: 25px;
+  color: #ffffff;
+  text-align: end;
+  padding: 5px 10px 5px 5px;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+.modal-header .close-button {
+  cursor: pointer;
+}
+.modal-form {
+  padding: 10px 20px;
+}
+.modal-actions {
+  padding: 10px;
+  width: 97%;
+  text-align: end;
+}
+.modal-actions button:first-child {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+}
+.modal-actions button {
+  border-radius: 5px;
+  background-color: #566ead;
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
 }

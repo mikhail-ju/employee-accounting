@@ -25,22 +25,37 @@ export const companiesSlice = createSlice({
     initialState,
     reducers: {
         setCompanies: (state, action: PayloadAction<Array<Companies>>) => {
-            state.companies = state.companies.concat(action.payload);
+            state.companies = action.payload;
+            if (state.selectedCompanies.length === 1) {
+                const currentCompany = state.companies.find((item) => {
+                    return item.id === state.selectedCompanies[0];
+                })
+                if (currentCompany) {
+                    state.employees = currentCompany.employees;
+                    state.employeesAmount = currentCompany.employeesAmount;
+                }
+            }
         },
         setAmount: (state, action: PayloadAction<number>) => {
             state.companiesAmount = action.payload;
         },
         selectCompany: (state, action: PayloadAction<number>) => {
             if (state.selectedCompanies.includes(action.payload)) {
-                const index: number = state.selectedCompanies.indexOf(action.payload);
-                state.selectedCompanies.splice(index, 1);
+                state.selectedCompanies = state.selectedCompanies.filter((item) => {
+                    return item !== action.payload;
+                });
             } else {
                 state.selectedCompanies.push(action.payload);
             }
 
             if (state.selectedCompanies.length === 1) {
-                state.employees = state.companies[state.selectedCompanies[0]].employees;
-                state.employeesAmount = state.companies[state.selectedCompanies[0]].employeesAmount;
+                const currentCompany = state.companies.find((item) => {
+                    return item.id === state.selectedCompanies[0];
+                })
+                if (currentCompany) {
+                    state.employees = currentCompany.employees;
+                    state.employeesAmount = currentCompany.employeesAmount;
+                }
             } else {
                 state.employees = [];
                 state.employeesAmount = 0;
@@ -52,13 +67,17 @@ export const companiesSlice = createSlice({
                 state.selectedCompanies = [];
             } else {
                 state.selectedCompanies = [];
-                state.companies.map((item, index) => state.selectedCompanies.push(index));
+                state.companies.map((item) => state.selectedCompanies.push(item.id));
             }
+        },
+        clearSelectedCompanies: (state) => {
+            state.selectedCompanies = [];
         },
         selectEmployee: (state, action: PayloadAction<number>) => {
             if (state.selectedEmployees.includes(action.payload)) {
-                const index: number = state.selectedEmployees.indexOf(action.payload);
-                state.selectedEmployees.splice(index, 1);
+                state.selectedEmployees = state.selectedEmployees.filter((item) => {
+                    return item !== action.payload;
+                });
             } else {
                 state.selectedEmployees.push(action.payload);
             }
@@ -68,8 +87,11 @@ export const companiesSlice = createSlice({
                 state.selectedEmployees = [];
             } else {
                 state.selectedEmployees = [];
-                state.employees.map((item, index) => state.selectedEmployees.push(index));
+                state.employees.map((item) => state.selectedEmployees.push(item.id));
             }
+        },
+        clearSelectedEmployees: (state) => {
+            state.selectedEmployees = [];
         },
     },
 })
@@ -77,4 +99,5 @@ export const companiesSlice = createSlice({
 export const {
     setCompanies, setAmount, selectCompany,
     selectEmployee, selectAllCompanies, selectAllEmployees,
+    clearSelectedCompanies, clearSelectedEmployees,
 } = companiesSlice.actions;

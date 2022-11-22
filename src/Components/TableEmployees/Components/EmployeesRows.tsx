@@ -15,13 +15,13 @@ function EmployeesRows (props: EmployeesRowsProps) {
         >
             {content.length > 0 ?
                 <>
-                    {content.map((item, index) => {
+                    {content.map((item) => {
                         const selected: boolean = selectedEmployees.includes(item.id);
                         return (
                             <div
                                 className={`table-row table-row-employees ${selected ? 'table-row-checked' : ''}`}
                                 key={item.id}
-                                onClick={() => selectRow(index)}
+                                onClick={() => selectRow(item.id)}
                             >
                                 <div className='table-row-cell'>
                                     <input

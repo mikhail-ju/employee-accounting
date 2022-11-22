@@ -30,6 +30,7 @@ body {
   display: grid;
   grid-template-columns: 55% 44%;
   gap: 20px;
+  z-index: 0;
 }
 
 .table {
@@ -37,6 +38,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 15px;
   height: 90vh;
+  z-index: 1;
   &-name {
     width: 100%;
     margin: 0 0 5px 0;
@@ -68,6 +70,7 @@ body {
     border-radius: 10px;
     border: 1px solid $border-color;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
   }
   &-rows {
     height: 80vh;
@@ -122,6 +125,60 @@ body {
     &.disable {
       color: #aaaaaa;
       cursor: not-allowed;
+    }
+  }
+}
+
+.modal {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background-color: rgba(#444444, 0.5);
+  &-body {
+    border-radius: 15px;
+    margin: 200px auto;
+    width: 600px;
+    height: auto;
+    background-color: #ffffff;
+    border: 1px solid $header-color;
+    z-index: 101;
+    font-size: 18px;
+  }
+  &-header {
+    background-color: $header-color;
+    font-size: 25px;
+    color: #ffffff;
+    text-align: end;
+    padding: 5px 10px 5px 5px;
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
+    .close-button {
+      cursor: pointer;
+    }
+  }
+  &-form {
+    padding: 10px 20px;
+  }
+  &-actions {
+    padding: 10px;
+    width: 97%;
+    text-align: end;
+    button:first-child {
+      background-color: #ffffff;
+      color: #000000;
+      border: 1px solid #000000;
+    }
+    button {
+      border-radius: 5px;
+      background-color: $header-color;
+      color: #ffffff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-left: 10px;
     }
   }
 }
