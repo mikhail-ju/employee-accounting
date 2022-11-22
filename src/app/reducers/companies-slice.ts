@@ -9,6 +9,8 @@ export interface CompaniesState {
     employeesAmount: number;
     selectedCompanies: Array<number>;
     selectedEmployees: Array<number>;
+    currentCompany: Companies | null;
+    currentEmployee: Employees | null;
 }
 
 const initialState: CompaniesState = {
@@ -18,6 +20,8 @@ const initialState: CompaniesState = {
     employeesAmount: 0,
     selectedCompanies: [],
     selectedEmployees: [],
+    currentCompany: null,
+    currentEmployee: null,
 }
 
 export const companiesSlice = createSlice({
@@ -53,6 +57,7 @@ export const companiesSlice = createSlice({
                     return item.id === state.selectedCompanies[0];
                 })
                 if (currentCompany) {
+                    state.currentCompany = currentCompany;
                     state.employees = currentCompany.employees;
                     state.employeesAmount = currentCompany.employeesAmount;
                 }
@@ -60,6 +65,7 @@ export const companiesSlice = createSlice({
                 state.employees = [];
                 state.employeesAmount = 0;
                 state.selectedEmployees = [];
+                state.currentCompany = null;
             }
         },
         selectAllCompanies: (state) => {
@@ -69,9 +75,11 @@ export const companiesSlice = createSlice({
                 state.selectedCompanies = [];
                 state.companies.map((item) => state.selectedCompanies.push(item.id));
             }
+            state.currentCompany = null;
         },
         clearSelectedCompanies: (state) => {
             state.selectedCompanies = [];
+            state.currentCompany = null;
         },
         selectEmployee: (state, action: PayloadAction<number>) => {
             if (state.selectedEmployees.includes(action.payload)) {
@@ -81,6 +89,14 @@ export const companiesSlice = createSlice({
             } else {
                 state.selectedEmployees.push(action.payload);
             }
+            if (state.selectedEmployees.length === 1) {
+                const currentEmployee = state.employees.find((item) => {
+                    return item.id === state.selectedEmployees[0];
+                });
+                if (currentEmployee) state.currentEmployee = currentEmployee;
+            } else {
+                state.currentEmployee = null;
+            }
         },
         selectAllEmployees: (state) => {
             if (state.selectedEmployees.length === state.employeesAmount) {
@@ -89,9 +105,11 @@ export const companiesSlice = createSlice({
                 state.selectedEmployees = [];
                 state.employees.map((item) => state.selectedEmployees.push(item.id));
             }
+            state.currentEmployee = null;
         },
         clearSelectedEmployees: (state) => {
             state.selectedEmployees = [];
+            state.currentEmployee = null;
         },
     },
 })

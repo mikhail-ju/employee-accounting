@@ -1,4 +1,4 @@
 export declare interface ModalMode {
-    currentMode: 'delete' | 'add' | 'edit' | null;
-    currentTable: 'companies' | 'employees' | null;
+    currentMode: 'delete' | 'add' | 'edit';
+    currentTable: 'companies' | 'employees';
 }

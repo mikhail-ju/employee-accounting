@@ -170,17 +170,39 @@ body {
   cursor: pointer;
 }
 .modal-form {
-  padding: 10px 20px;
+  padding: 20px 25px;
+}
+.modal-fields {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.modal-fields span {
+  margin-bottom: 5px;
+}
+.modal-fields input {
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 20px;
+  border-radius: 5px;
+  padding: 3px;
 }
 .modal-actions {
-  padding: 10px;
-  width: 97%;
+  width: 100%;
   text-align: end;
 }
 .modal-actions button:first-child {
   background-color: #ffffff;
   color: #000000;
   border: 1px solid #000000;
+}
+.modal-actions button.blocked {
+  background-color: #555555;
+  cursor: not-allowed;
 }
 .modal-actions button {
   border-radius: 5px;

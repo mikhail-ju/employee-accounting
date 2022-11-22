@@ -23,3 +23,16 @@ export declare interface CompaniesHeaderProps {
 export declare interface CompaniesActionsProps {
     selectedCompanies: Array<number>;
 }
+
+export declare interface CompaniesValues {
+    companyName: string;
+    address: string;
+}
+
+export declare interface CompaniesFormProps {
+    values: CompaniesValues | null;
+    mode: 'add' | 'edit';
+    onAdd: (CompaniesValues)=>void;
+    onEdit: (CompaniesValues)=>void;
+    onCancel: ()=>void;
+}

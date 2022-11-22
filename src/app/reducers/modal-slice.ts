@@ -3,15 +3,12 @@ import {ModalMode} from "../../Components/Modal/ModalTypes";
 
 export interface ModalState {
     visible: boolean;
-    mode: ModalMode;
+    mode: ModalMode | null;
 }
 
 const initialState: ModalState = {
     visible: false,
-    mode: {
-        currentMode: null,
-        currentTable: null,
-    },
+    mode: null,
 }
 
 export const modalSlice = createSlice({
@@ -19,12 +16,12 @@ export const modalSlice = createSlice({
     initialState,
     reducers: {
         setVisible: (state, action: PayloadAction<boolean>) => {
-            if (!state.mode.currentMode || !state.mode.currentTable) {
+            if (!state.mode) {
                 state.visible = false;
             } else {
                 state.visible = action.payload;
                 if (!action.payload) {
-                    state.mode = {currentMode: null, currentTable: null}
+                    state.mode = null;
                 }
             }
         },
@@ -32,7 +29,7 @@ export const modalSlice = createSlice({
             state.mode = action.payload;
         },
         accept: (state) => {
-            state.mode = {currentMode: null, currentTable: null}
+            state.mode = null;
             state.visible = false;
         }
     },

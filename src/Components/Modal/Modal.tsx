@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../app/store";
 import {RiCloseCircleLine} from "react-icons/ri";
@@ -7,24 +7,26 @@ import {
     clearSelectedCompanies, setAmount, setCompanies,
     clearSelectedEmployees,
 } from "../../app/reducers/companies-slice";
-import {Companies} from "../TableCompanies/TableCompaniesTypes";
+import CompaniesForm from "../TableCompanies/Components/CompaniesForm";
+import {Companies, CompaniesValues} from "../TableCompanies/TableCompaniesTypes";
 
 export default function Modal () {
-    const {mode, visible} =
-        useSelector((state: RootState) => state.modalReducer);
-    const {selectedCompanies, selectedEmployees, companies, employeesAmount, employees} =
-        useSelector((state: RootState) => state.companiesReducer);
+    const {mode} = useSelector((state: RootState) => state.modalReducer);
+    const {
+        selectedCompanies, selectedEmployees, companies,
+        employees, currentEmployee, currentCompany,
+    } = useSelector((state: RootState) => state.companiesReducer);
     const dispatch = useDispatch();
 
     const onDelete = () => {
-        if (mode.currentTable === 'companies') {
+        if (mode && mode.currentTable === 'companies') {
             const content = [...companies].filter((item) => {
                 return !selectedCompanies.includes(item.id);
             });
             dispatch(setCompanies(content));
             dispatch(setAmount(content.length));
             dispatch(clearSelectedCompanies());
-        } else if (mode.currentTable === 'employees') {
+        } else if (mode && mode.currentTable === 'employees') {
             const contentEmployees = [...employees].filter((item) => {
                 return !selectedEmployees.includes(item.id);
             });
@@ -41,14 +43,43 @@ export default function Modal () {
         dispatch(accept());
     }
 
-    const onAdd = () => {}
+    const onAdd = (values: CompaniesValues) => {
+        const newCompanies: Array<Companies> = [...companies];
+        const ids: Array<number> = newCompanies.map((item) => item.id)
+        newCompanies.unshift({
+            companyName: values.companyName,
+            address: values.address,
+            employeesAmount: 0,
+            employees: [],
+            id: Math.max(...ids) + 1,
+        });
+        dispatch(setCompanies(newCompanies));
+        dispatch(accept());
+    }
 
-    const onEdit = () => {}
+    const onEdit = (values: CompaniesValues) => {
+        if (currentCompany) {
+            const newCompanies: Array<Companies> = [...companies].map((item) => {
+                if (item.id === currentCompany.id) {
+                    return {
+                        companyName: values.companyName,
+                        address: values.address,
+                        employeesAmount: currentCompany.employeesAmount,
+                        employees: currentCompany.employees,
+                        id: currentCompany.id,
+                    };
+                } else {
+                    return item;
+                }
+            });
+            dispatch(setCompanies(newCompanies));
+            dispatch(accept());
+        }
+    }
 
     return (
         <div
             className='modal modal-background'
-            style={{display: visible ? 'block' : 'none'}}
             onClick={(e) => {
                 if (e.target === document.querySelector('.modal-background')) {
                     dispatch(setVisible(false));
@@ -64,36 +95,32 @@ export default function Modal () {
                         onClick={() => dispatch(setVisible(false))}
                     />
                 </div>
-                <div className='modal-form'>
-                    {mode.currentMode === 'delete' &&
-                        <p>Вы уверены?</p>
-                    }
-                </div>
-                <div className='modal-actions'>
-                    <button
-                        onClick={() => dispatch(setVisible(false))}
-                    >
-                        Отмена
-                    </button>
-                    <button
-                        onClick={() => {
-                            switch (mode.currentMode) {
-                                case "add":
-                                    onAdd();
-                                    break;
-                                case "delete":
-                                    onDelete();
-                                    break;
-                                case "edit":
-                                    onEdit();
-                                    break;
-                                default: break;
-                            }
-                        }}
-                    >
-                        OK
-                    </button>
-                </div>
+                {mode && mode.currentMode === 'delete' &&
+                    <div className='modal-form'>
+                        <p>Удалить выбранные элементы?</p>
+                        <div className='modal-actions'>
+                            <button onClick={() => dispatch(setVisible(false))}>
+                                Отмена
+                            </button>
+                            <button onClick={() => onDelete()}>
+                                Удалить
+                            </button>
+                        </div>
+                    </div>
+                }
+                {mode && mode.currentMode !== 'delete' &&
+                    <>
+                        {mode.currentTable === 'companies' &&
+                            <CompaniesForm
+                                onAdd={onAdd}
+                                onEdit={onEdit}
+                                onCancel={() => dispatch(setVisible(false))}
+                                mode={mode ? mode.currentMode : 'add'}
+                                values={mode?.currentMode === 'edit' ? currentCompany : null}
+                            />
+                        }
+                    </>
+                }
             </div>
         </div>
     );

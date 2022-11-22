@@ -24,7 +24,7 @@ export default function getFakeData (companyAmount: number) {
 
     const getCompanies = () => {
         const company: GetCompanies = (id) => {
-            const employeesAmount: number = faker.datatype.number({min: 1, max: 1000, precision: 1})
+            const employeesAmount: number = faker.datatype.number({min: 1, max: 200, precision: 1})
             return (
                 {
                     check: false,

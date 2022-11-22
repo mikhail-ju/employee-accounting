@@ -12,10 +12,22 @@ export default function CompaniesActions (props: CompaniesActionsProps) {
     return (
         <div className='actions'>
             <div className='able'>
-                <RiAddCircleLine/>
+                <RiAddCircleLine
+                    onClick={() => {
+                        dispatch(setMode({currentMode: 'add', currentTable: 'companies'}));
+                        dispatch(setVisible(true));
+                    }}
+                />
             </div>
             <div className={`${selectedCompanies.length === 1 ? 'able' : 'disable'}`}>
-                <RiEditLine/>
+                <RiEditLine
+                    onClick={() => {
+                        if (selectedCompanies.length === 1) {
+                            dispatch(setMode({currentMode: 'edit', currentTable: 'companies'}));
+                            dispatch(setVisible(true));
+                        }
+                    }}
+                />
             </div>
             <div className={`${selectedCompanies.length !== 0 ? 'able' : 'disable'} delete-button`}>
                 <RiDeleteBinLine
