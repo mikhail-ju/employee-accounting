@@ -80,6 +80,7 @@ export const companiesSlice = createSlice({
         clearSelectedCompanies: (state) => {
             state.selectedCompanies = [];
             state.currentCompany = null;
+            state.employees = [];
         },
         selectEmployee: (state, action: PayloadAction<number>) => {
             if (state.selectedEmployees.includes(action.payload)) {

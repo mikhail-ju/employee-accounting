@@ -91,7 +91,7 @@ export default function Modal () {
             });
             const newCompanies: Array<Companies> = [...companies].map((item) => {
                 if (item.id === currentCompany.id) {
-                    return {...item, employees: newEmployees}
+                    return {...item, employees: newEmployees, employeesAmount: newEmployees.length};
                 } else {
                     return item;
                 }
