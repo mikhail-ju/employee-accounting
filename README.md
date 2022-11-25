@@ -1,46 +1,59 @@
-# Getting Started with Create React App
+# Example of using `Faker` with React and Typescript
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
 
-## Available Scripts
+### First load
 
-In the project directory, you can run:
+Generating a random number of companies with method `faker.datatype`.
+The values of min, max and precision are optional.
 
-### `npm start`
+    const amount = faker.datatype.number({min: 100, max: 200, precision: 1});
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Let's create a custom function to generate employee data.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**getEmployee** accepts the number of employees to be generated and returns a collection.
 
-### `npm test`
+    const getEmployee = (amount: number) => {
+        const employee: GetEmployee = (id) => {
+            return (
+                {
+                    firstName: `${faker.name.firstName()}`,
+                    lastName: `${faker.name.lastName()}`,
+                    position: `${faker.name.jobType()}`,
+                    id: id,
+                }
+            );
+        }
+        const result: Array<Employees> = [];
+        for (let i = 0; i < amount; i++) {
+            result.push(employee(i));
+        }
+        return result;
+    }
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Create a custom function to generate companies data.
+For variety, let's make the number of employees in each company different using the method already known to us.
+At the output, we get a collection with a random number of companies, each company has a random number of employees.
 
-### `npm run build`
+    const getCompanies = () => {
+        const company: GetCompanies = (id) => {
+            const employeesAmount: number = faker.datatype.number({min: 1, max: 200, precision: 1})
+            return (
+                {
+                    check: false,
+                    address: `${faker.address.streetAddress(true)}`,
+                    companyName: `${faker.company.name()}`,
+                    employeesAmount: employeesAmount,
+                    employees: getEmployee(employeesAmount),
+                    id: id,
+                }
+            );
+        }
+        const result: Array<Companies> = [];
+        for (let i = 0; i < companyAmount; i++) {
+            result.push(company(i));
+        }
+        return result;
+    }
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+After we write the result to the store using the redax toolkit.
